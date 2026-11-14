@@ -1,4 +1,4 @@
-package com.examplo.inventoryservice;
+package com.exemplo.inventory;
 
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.testcontainers.service.connection.ServiceConnection;
