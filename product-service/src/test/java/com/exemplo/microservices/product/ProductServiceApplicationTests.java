@@ -6,18 +6,11 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
-import org.springframework.boot.testcontainers.service.connection.ServiceConnection;
-import org.testcontainers.junit.jupiter.Container;
-import org.testcontainers.junit.jupiter.Testcontainers;
-import org.testcontainers.mongodb.MongoDBContainer;
+import org.springframework.context.annotation.Import;
 
-@Testcontainers
+@Import(TestcontainersConfiguration.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class ProductServiceApplicationTests {
-
-	@Container
-	@ServiceConnection
-	static MongoDBContainer mongoDBContainer = new MongoDBContainer("mongo:7.0.5");
 
 	@LocalServerPort
 	int port;
@@ -48,6 +41,34 @@ class ProductServiceApplicationTests {
 				.body("name", Matchers.equalTo("Iphone 15"))
 				.body("description", Matchers.equalTo("Iphone 15 is a smartphone by Apple"))
 				.body("price", Matchers.equalTo(1000));
+	}
+
+	@Test
+	void shouldGetAllProducts() {
+		String requestBody = """
+				{
+					"name": "Iphone 15",
+					"description": "Iphone 15 is a smartphone by Apple",
+					"price": 1000
+				}
+				""";
+
+		// Crio o produti
+		RestAssured.given()
+				.contentType("application/json")
+				.body(requestBody)
+				.when()
+				.post("/api/product")
+				.then()
+				.statusCode(201);
+
+		// Verifico se o produto veio na listagem
+		RestAssured.given()
+				.when()
+				.get("/api/product")
+				.then()
+				.statusCode(200)
+				.body("name", Matchers.hasItem("Iphone 15"));
 	}
 
 }
