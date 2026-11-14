@@ -47,13 +47,13 @@ class ProductServiceApplicationTests {
 	void shouldGetAllProducts() {
 		String requestBody = """
 				{
-					"name": "Iphone 15",
-					"description": "Iphone 15 is a smartphone by Apple",
-					"price": 1000
+					"name": "Pixel 8",
+					"description": "Pixel 8 is a smartphone by Google",
+					"price": 900
 				}
 				""";
 
-		// Crio o produti
+		// Crio o produto
 		RestAssured.given()
 				.contentType("application/json")
 				.body(requestBody)
@@ -68,7 +68,7 @@ class ProductServiceApplicationTests {
 				.get("/api/product")
 				.then()
 				.statusCode(200)
-				.body("name", Matchers.hasItem("Iphone 15"));
+				.body("name", Matchers.hasItem("Pixel 8"));
 	}
 
 }
