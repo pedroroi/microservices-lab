@@ -1,7 +1,9 @@
 package com.exemplo.order.controller;
 
 import com.exemplo.order.dto.OrderRequest;
+import com.exemplo.order.dto.OrderResponse;
 import com.exemplo.order.service.OrderService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -14,9 +16,8 @@ public class OrderController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public String placeOrder(@RequestBody OrderRequest orderRequest) {
-        orderService.placeOrder(orderRequest);
-        return "Pedido feito com sucesso!";
+    public OrderResponse placeOrder(@Valid @RequestBody OrderRequest orderRequest) {
+        return orderService.placeOrder(orderRequest);
     }
 
 }
