@@ -33,7 +33,7 @@ class InventoryRepositoryTests {
     void shouldNotBeInStockWhenQuantityExceedsStock() {
         assertThat(inventoryRepository
                 .existsBySkuCodeAndQuantityGreaterThanEqual
-                        ("nao_existe", 1))
+                        ("iphone_15", 101))
                 .isFalse();
     }
 
