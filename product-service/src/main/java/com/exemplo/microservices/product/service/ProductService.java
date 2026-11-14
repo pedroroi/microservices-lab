@@ -23,13 +23,14 @@ public class ProductService {
                 .description(productRequest.description())
                 .price(productRequest.price())
                 .build();
-        productRepository.save(product);
-        log.info("Produto criado: id={}", product.getId());
+        Product saved = productRepository.save(product);
+        log.info("Produto criado: id={}", saved.getId());
+
         return new ProductResponse(
-                product.getId(),
-                product.getName(),
-                product.getDescription(),
-                product.getPrice());
+                saved.getId(),
+                saved.getName(),
+                saved.getDescription(),
+                saved.getPrice());
     }
 
 
